@@ -8,9 +8,10 @@ import "./ConditionsCheckerForMoneyMarket.sol";
 import "./Messages.sol";
 
 contract MmAdvancedScriptExecutor is ConditionsChecker, ConditionsCheckerForMoneyMarket {
-    uint256 public override constant GAS_LIMIT = 350000; // 0.00028 GWEI
     mapping(address => mapping(IERC20 => bool)) private allowances;
     IPriceOracleGetter public priceOracle;
+
+    constructor() ConditionsChecker(350000) {}
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 

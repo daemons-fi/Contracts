@@ -13,7 +13,7 @@ import "./utils/Babylonian.sol";
  * Implemented and modified by Daemons teams.
  */
 contract ZapInScriptExecutor is ConditionsChecker {
-    uint256 public constant override GAS_LIMIT = 500000; // 0.00050 GWEI
+    constructor() ConditionsChecker(500000) {}
 
     /* ========== HASH FUNCTIONS ========== */
 

@@ -17,7 +17,7 @@ abstract contract ConditionsChecker is Ownable {
     uint256 internal immutable chainId;
     IGasTank internal gasTank;
     GasPriceFeed internal gasPriceFeed;
-    uint256 public MINIMUM_GAS_FOR_SCRIPT_EXECUTION = 0.1 ether;
+    uint256 internal immutable GAS_LIMIT;
 
     // domain definition
     string private constant EIP712_DOMAIN = "EIP712Domain(string name)";
@@ -28,19 +28,13 @@ abstract contract ConditionsChecker is Ownable {
 
     /* ========== CONSTRUCTOR ========== */
 
-    constructor() {
+    constructor(uint256 _gas_limit) {
         uint256 id;
         assembly {
             id := chainid()
         }
         chainId = id;
-    }
-
-    /* ========== ABSTRACT FUNCTIONS ========== */
-
-    function GAS_LIMIT() external virtual returns (uint256) {
-        require(false, "GAS_LIMIT should have been overridden");
-        return 0;
+        GAS_LIMIT = _gas_limit;
     }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
@@ -57,15 +51,6 @@ abstract contract ConditionsChecker is Ownable {
     function setGasFeed(address _gasPriceFeed) external onlyOwner {
         require(_gasPriceFeed != address(0));
         gasPriceFeed = GasPriceFeed(_gasPriceFeed);
-    }
-
-    /// @notice Set the minimum amount of gas that should be stored
-    /// in the user Gas tank to execute the script
-    /// @param _amount the amount that will represent the new minimum
-    /// @dev the amount must be greater than 0
-    function setMinimumGas(uint256 _amount) external onlyOwner {
-        require(_amount > 0, "Amount must be greater than 0");
-        MINIMUM_GAS_FOR_SCRIPT_EXECUTION = _amount;
     }
 
     /// @notice Checks whether the contract is ready to operate
@@ -157,7 +142,7 @@ abstract contract ConditionsChecker is Ownable {
 
     /// @notice Checks whether the user has enough funds in the GasTank to cover a script execution
     function verifyGasTank(address user) internal view {
-        require(gasTank.gasBalanceOf(user) >= MINIMUM_GAS_FOR_SCRIPT_EXECUTION, "[GAS][TMP]");
+        require(gasTank.gasBalanceOf(user) > GAS_LIMIT * gasPriceFeed.lastGasPrice(), "[GAS][TMP]");
     }
 
     /// @notice Checks whether the user has enough funds to pay the tip to the executor

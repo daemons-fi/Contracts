@@ -6,8 +6,9 @@ import "./ConditionsCheckerForMoneyMarket.sol";
 import "./Messages.sol";
 
 contract MmBaseScriptExecutor is ConditionsChecker, ConditionsCheckerForMoneyMarket {
-    uint256 public override constant GAS_LIMIT = 350000; // 0.00030 GWEI
     mapping(address => mapping(IERC20 => bool)) private allowances;
+
+    constructor() ConditionsChecker(350000) {}
 
     /* ========== HASH FUNCTIONS ========== */
 

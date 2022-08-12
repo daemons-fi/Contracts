@@ -7,7 +7,7 @@ import "./interfaces/IUniswapV2Router.sol";
 import "./interfaces/IUniswapV2Factory.sol";
 
 contract ZapOutScriptExecutor is ConditionsChecker {
-    uint256 public override constant GAS_LIMIT = 500000; // 0.00050 GWEI
+    constructor() ConditionsChecker(500000) {}
 
     /* ========== HASH FUNCTIONS ========== */
 

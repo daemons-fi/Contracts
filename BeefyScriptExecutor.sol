@@ -6,7 +6,7 @@ import "./Messages.sol";
 import "./interfaces/IBeefyVault.sol";
 
 contract BeefyScriptExecutor is ConditionsChecker {
-    uint256 public override constant GAS_LIMIT = 400000; // 0.00038 GWEI
+    constructor() ConditionsChecker(400000) {}
 
     /* ========== HASH FUNCTIONS ========== */
 
@@ -70,10 +70,7 @@ contract BeefyScriptExecutor is ConditionsChecker {
         // otherwise it's enough if the user has more than 0 in the wallet.
         uint256 minAmount = message.typeAmt == 0 ? message.amount - 1 : 0;
         verifyAllowance(message.user, tokenToCheck, minAmount);
-        require(
-            ERC20(tokenToCheck).balanceOf(message.user) > minAmount,
-            "[SCRIPT_BALANCE][TMP]"
-        );
+        require(ERC20(tokenToCheck).balanceOf(message.user) > minAmount, "[SCRIPT_BALANCE][TMP]");
 
         verifyFrequency(message.frequency, message.scriptId);
         verifyBalance(message.balance, message.user);

@@ -6,8 +6,9 @@ import "./Messages.sol";
 import "./interfaces/IUniswapV2Router.sol";
 
 contract SwapperScriptExecutor is ConditionsChecker {
-    uint256 public override constant GAS_LIMIT = 350000; // 0.00035 GWEI
     mapping(address => mapping(IERC20 => bool)) private allowances;
+
+    constructor() ConditionsChecker(350000) {}
 
     /* ========== HASH FUNCTIONS ========== */
 

@@ -6,7 +6,7 @@ import "./Messages.sol";
 import "./interfaces/IUniswapV2Router.sol";
 
 contract TransferScriptExecutor is ConditionsChecker {
-    uint256 public override constant GAS_LIMIT = 200000; // 0.00020 GWEI
+    constructor() ConditionsChecker(200000) {}
 
     /* ========== HASH FUNCTIONS ========== */
 
