@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "./ConditionsChecker.sol";
-import "./Messages.sol";
-import "./interfaces/IUniswapV2Router.sol";
+import "../infrastructure/ConditionsChecker.sol";
+import "../infrastructure/Messages.sol";
+import "../interfaces/IUniswapV2Router.sol";
 
 contract SwapperScriptExecutor is ConditionsChecker {
     mapping(address => mapping(IERC20 => bool)) private allowances;

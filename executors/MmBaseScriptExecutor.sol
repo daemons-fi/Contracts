@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "./ConditionsChecker.sol";
-import "./ConditionsCheckerForMoneyMarket.sol";
-import "./Messages.sol";
+import "../infrastructure/ConditionsChecker.sol";
+import "../infrastructure/ConditionsCheckerForMoneyMarket.sol";
+import "../infrastructure/Messages.sol";
 
 contract MmBaseScriptExecutor is ConditionsChecker, ConditionsCheckerForMoneyMarket {
     mapping(address => mapping(IERC20 => bool)) private allowances;

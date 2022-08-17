@@ -2,7 +2,7 @@
 pragma solidity ^0.8.9;
 
 import "./ConditionsChecker.sol";
-import "./interfaces/IMoneyMarket.sol";
+import "../interfaces/IMoneyMarket.sol";
 
 abstract contract ConditionsCheckerForMoneyMarket {
 

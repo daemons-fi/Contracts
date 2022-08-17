@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "./interfaces/IAavePriceOracleGetter.sol";
-import "./interfaces/IAaveCreditDelegationToken.sol";
-import "./ConditionsChecker.sol";
-import "./ConditionsCheckerForMoneyMarket.sol";
-import "./Messages.sol";
+import "../interfaces/IAavePriceOracleGetter.sol";
+import "../interfaces/IAaveCreditDelegationToken.sol";
+import "../infrastructure/ConditionsChecker.sol";
+import "../infrastructure/ConditionsCheckerForMoneyMarket.sol";
+import "../infrastructure/Messages.sol";
 
 contract MmAdvancedScriptExecutor is ConditionsChecker, ConditionsCheckerForMoneyMarket {
     mapping(address => mapping(IERC20 => bool)) private allowances;

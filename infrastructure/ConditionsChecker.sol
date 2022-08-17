@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "hardhat/console.sol";
 import "./Messages.sol";
-import "./interfaces/IGasTank.sol";
-import "./GasPriceFeed.sol";
-import "./interfaces/IUniswapV2Router.sol";
+import "../interfaces/IGasTank.sol";
+import "../core/GasPriceFeed.sol";
+import "../interfaces/IUniswapV2Router.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -174,7 +173,6 @@ abstract contract ConditionsChecker is Ownable {
         path[1] = price.tokenB;
         uint256 one = 10**ERC20(price.tokenA).decimals();
         uint256 tokenPrice = IUniswapV2Router01(price.router).getAmountsOut(one, path)[1];
-        console.log("tokenPrice", tokenPrice);
 
         if (price.comparison == 0x00)
             // greater than

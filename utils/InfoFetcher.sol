@@ -16,7 +16,12 @@ struct AccountData {
 struct MmInfo {
     AccountData accountData;
     uint128[] APYs;
-    uint256[] balances;
+    Balances balances;
+}
+
+struct Balances {
+    uint256 coin;
+    uint256[] tokens;
 }
 
 /**
@@ -32,24 +37,24 @@ struct MmInfo {
 contract InfoFetcher {
     /* ========== PUBLIC VIEWS ========== */
 
-    /// @notice Fetches the balances of the passed list of tokens
+    /// @notice Fetch the user ETH balance and of the passed list of tokens
     /// @param user the user to check the balance of.
     /// @param tokens the addresses of the ERC20 tokens to get the balances from.
-    function fetchTokenBalances(address user, address[] calldata tokens)
+    function fetchBalances(address user, address[] calldata tokens)
         public
         view
-        returns (uint256[] memory)
+        returns (Balances memory)
     {
-        uint256[] memory balances = new uint256[](tokens.length);
+        uint256[] memory tokenBalances = new uint256[](tokens.length);
 
         for (uint256 i = 0; i < tokens.length; i++) {
-            balances[i] = ERC20(tokens[i]).balanceOf(user);
+            tokenBalances[i] = ERC20(tokens[i]).balanceOf(user);
         }
 
-        return balances;
+        return Balances(user.balance, tokenBalances);
     }
 
-    /// @notice Fetches information about the loans status of a user in the specified MM.
+    /// @notice Fetch information about the loans status of a user in the specified MM.
     /// @param mmPool the pool of the MoneyMarket to consider.
     /// @param isV3 specifies whether the MM is a V2 or V3, needed as the signature of the APY function is different.
     /// @param user the user to check the balance of.
@@ -66,7 +71,7 @@ contract InfoFetcher {
             MmInfo(
                 fetchAccountData(mmPool, user),
                 fetchAPYs(mmPool, isV3, tokens),
-                fetchTokenBalances(user, aTokens)
+                fetchBalances(user, aTokens)
             );
     }
 

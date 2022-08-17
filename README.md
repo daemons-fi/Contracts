@@ -11,7 +11,7 @@ those contracts that constitute the infrastructure. Some examples are:
 -   DaemonsToken
 -   GasTank
 -   Treasury
--   etc..
+-   etc...
 
 ## Script infrastructure
 
@@ -19,7 +19,7 @@ the contracts needed to run the scripts, like:
 
 -   Messages
 -   ConditionsChecker
--   etc..
+-   etc...
 
 ## Script executors
 
@@ -28,4 +28,12 @@ the contracts that are actually running the scripts. Each executor takes care of
 -   TransferScriptExecutor
 -   SwapperScriptExecutor
 -   ZapInScriptExecutor
--   etc..
+-   etc...
+
+## Utils
+
+other secondary contracts useful to run the ecosystem. For example:
+
+-   Vesting
+-   InfoFetcher
+-   etc...

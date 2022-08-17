@@ -1,8 +1,8 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.9;
 
-import "./interfaces/IGasTank.sol";
-import "./interfaces/ITreasury.sol";
+import "../interfaces/IGasTank.sol";
+import "../interfaces/ITreasury.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 

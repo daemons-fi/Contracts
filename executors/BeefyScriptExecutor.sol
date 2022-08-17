@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "./ConditionsChecker.sol";
-import "./Messages.sol";
-import "./interfaces/IBeefyVault.sol";
+import "../infrastructure/ConditionsChecker.sol";
+import "../infrastructure/Messages.sol";
+import "../interfaces/IBeefyVault.sol";
 
 contract BeefyScriptExecutor is ConditionsChecker {
     constructor() ConditionsChecker(400000) {}
