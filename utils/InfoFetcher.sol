@@ -78,7 +78,14 @@ contract InfoFetcher {
         address user
     ) public view returns (LPInfo memory) {
         address factory = IUniswapV2Router01(router).factory();
-        IUniswapV2Pair pair = IUniswapV2Pair(IUniswapV2Factory(factory).getPair(tokenA, tokenB));
+        address pairAddress = IUniswapV2Factory(factory).getPair(tokenA, tokenB);
+
+        // if pair is not supported, we return an empty object
+        if (pairAddress == address(0)) {
+            return LPInfo(address(0), 0, address(0), address(0), 0, 0);
+        }
+
+        IUniswapV2Pair pair = IUniswapV2Pair(pairAddress);
         (uint112 reserve0, uint112 reserve1, ) = pair.getReserves();
 
         return
