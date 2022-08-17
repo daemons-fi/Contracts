@@ -3,6 +3,9 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "../interfaces/IMoneyMarket.sol";
+import "../interfaces/IUniswapV2Router.sol";
+import "../interfaces/IUniswapV2Factory.sol";
+import "../interfaces/IUniswapV2Pair.sol";
 
 struct AccountData {
     uint256 totalCollateralETH;
@@ -22,6 +25,15 @@ struct MmInfo {
 struct Balances {
     uint256 coin;
     uint256[] tokens;
+}
+
+struct LPInfo {
+    address pairAddress;
+    uint256 balance;
+    address token0;
+    address token1;
+    uint112 reserve0;
+    uint112 reserve1;
 }
 
 /**
@@ -52,6 +64,32 @@ contract InfoFetcher {
         }
 
         return Balances(user.balance, tokenBalances);
+    }
+
+    /// @notice Fetch the user ETH balance and of the passed list of tokens
+    /// @param tokenA the first token of the LP.
+    /// @param tokenB the second token of the LP.
+    /// @param router the router of the DEX owning the LP.
+    /// @param user the user to check the LP balance of.
+    function fetchLpInfo(
+        address tokenA,
+        address tokenB,
+        address router,
+        address user
+    ) public view returns (LPInfo memory) {
+        address factory = IUniswapV2Router01(router).factory();
+        IUniswapV2Pair pair = IUniswapV2Pair(IUniswapV2Factory(factory).getPair(tokenA, tokenB));
+        (uint112 reserve0, uint112 reserve1, ) = pair.getReserves();
+
+        return
+            LPInfo(
+                address(pair),
+                pair.balanceOf(user),
+                pair.token0(),
+                pair.token1(),
+                reserve0,
+                reserve1
+            );
     }
 
     /// @notice Fetch information about the loans status of a user in the specified MM.
