@@ -30,6 +30,14 @@ the contracts that are actually running the scripts. Each executor takes care of
 -   ZapInScriptExecutor
 -   etc...
 
+## Liquidity Managers
+
+contracts that manage the liquidity for the Treasury:
+
+-   UniswapV2Manager
+-   TridentManager
+-   etc...
+
 ## Utils
 
 other secondary contracts useful to run the ecosystem. For example:

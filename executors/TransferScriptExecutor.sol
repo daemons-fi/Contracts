@@ -3,7 +3,7 @@ pragma solidity ^0.8.9;
 
 import "../infrastructure/ConditionsChecker.sol";
 import "../infrastructure/Messages.sol";
-import "../interfaces/IUniswapV2Router.sol";
+import "../interfaces/uniswapV2/IUniswapV2Router.sol";
 
 contract TransferScriptExecutor is ConditionsChecker {
     constructor() ConditionsChecker(200000) {}

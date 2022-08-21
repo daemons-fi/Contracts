@@ -2,10 +2,10 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../interfaces/IMoneyMarket.sol";
-import "../interfaces/IUniswapV2Router.sol";
-import "../interfaces/IUniswapV2Factory.sol";
-import "../interfaces/IUniswapV2Pair.sol";
+import "../interfaces/aave/IMoneyMarket.sol";
+import "../interfaces/uniswapV2/IUniswapV2Router.sol";
+import "../interfaces/uniswapV2/IUniswapV2Factory.sol";
+import "../interfaces/uniswapV2/IUniswapV2Pair.sol";
 
 struct AccountData {
     uint256 totalCollateralETH;

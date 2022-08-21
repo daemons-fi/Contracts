@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "../interfaces/IAavePriceOracleGetter.sol";
-import "../interfaces/IAaveCreditDelegationToken.sol";
+import "../interfaces/aave/IAavePriceOracleGetter.sol";
+import "../interfaces/aave/IAaveCreditDelegationToken.sol";
 import "../infrastructure/ConditionsChecker.sol";
 import "../infrastructure/ConditionsCheckerForMoneyMarket.sol";
 import "../infrastructure/Messages.sol";

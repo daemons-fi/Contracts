@@ -4,7 +4,7 @@ pragma solidity ^0.8.9;
 import "./Messages.sol";
 import "../interfaces/IGasTank.sol";
 import "../core/GasPriceFeed.sol";
-import "../interfaces/IUniswapV2Router.sol";
+import "../interfaces/uniswapV2/IUniswapV2Router.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 

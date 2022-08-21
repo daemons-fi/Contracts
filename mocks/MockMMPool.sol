@@ -2,7 +2,7 @@
 pragma solidity ^0.8.9;
 
 import "hardhat/console.sol";
-import "../interfaces/IMoneyMarket.sol";
+import "../interfaces/aave/IMoneyMarket.sol";
 import "./MockToken.sol";
 
 contract MockMoneyMarketPool is IMoneyMarket {

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "../interfaces/IAavePriceOracleGetter.sol";
+import "../interfaces/aave/IAavePriceOracleGetter.sol";
 
 contract MockPriceOracleGetter is IPriceOracleGetter {
     uint256 fakePrice;

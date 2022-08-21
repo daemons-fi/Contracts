@@ -3,7 +3,7 @@ pragma solidity ^0.8.9;
 
 import "../infrastructure/ConditionsChecker.sol";
 import "../infrastructure/Messages.sol";
-import "../interfaces/IBeefyVault.sol";
+import "../interfaces/beefy/IBeefyVault.sol";
 
 contract BeefyScriptExecutor is ConditionsChecker {
     constructor() ConditionsChecker(400000) {}

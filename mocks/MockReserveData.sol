@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "../interfaces/IMoneyMarket.sol";
+import "../interfaces/aave/IMoneyMarket.sol";
 import "./MockMMPool.sol";
 
 contract MockReserveDataV2 is MockMoneyMarketPool, IGetReserveDataV2 {
