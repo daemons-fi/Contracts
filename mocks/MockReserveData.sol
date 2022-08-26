@@ -1,16 +1,65 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import "hardhat/console.sol";
 import "../interfaces/aave/IMoneyMarket.sol";
-import "./MockMMPool.sol";
+import "./MockToken.sol";
+
+contract MockMoneyMarketPool is IMoneyMarket {
+    function deposit(
+        address,
+        uint256,
+        address,
+        uint16
+    ) external pure override {
+        revert("Not supported");
+    }
+
+    function withdraw(
+        address,
+        uint256,
+        address
+    ) external pure override returns (uint256) {
+        revert("Not supported");
+    }
+
+    function borrow(
+        address,
+        uint256,
+        uint256,
+        uint16,
+        address
+    ) external pure override {
+        revert("Not supported");
+    }
+
+    function repay(
+        address,
+        uint256,
+        uint256,
+        address
+    ) external pure override returns (uint256) {
+        revert("Not supported");
+    }
+
+    function getUserAccountData(address)
+        external
+        pure
+        override
+        returns (
+            uint256 totalCollateralBase,
+            uint256 totalDebtBase,
+            uint256 availableBorrowsBase,
+            uint256 currentLiquidationThreshold,
+            uint256 ltv,
+            uint256 healthFactor
+        )
+    {
+        return (12e18, 10e18, 35e18, 555, 125, 2e18);
+    }
+}
 
 contract MockReserveDataV2 is MockMoneyMarketPool, IGetReserveDataV2 {
-    constructor(
-        address _token,
-        address _aToken,
-        address _debtToken
-    ) MockMoneyMarketPool(_token, _aToken, _debtToken) {}
-
     function getReserveData(address) external pure returns (IGetReserveDataV2.ReserveData memory) {
         return
             IGetReserveDataV2.ReserveData(
@@ -31,12 +80,6 @@ contract MockReserveDataV2 is MockMoneyMarketPool, IGetReserveDataV2 {
 }
 
 contract MockReserveDataV3 is MockMoneyMarketPool, IGetReserveDataV3 {
-    constructor(
-        address _token,
-        address _aToken,
-        address _debtToken
-    ) MockMoneyMarketPool(_token, _aToken, _debtToken) {}
-
     function getReserveData(address) external pure returns (IGetReserveDataV3.ReserveData memory) {
         return
             IGetReserveDataV3.ReserveData(

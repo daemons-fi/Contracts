@@ -8,7 +8,7 @@ import "../infrastructure/Messages.sol";
 contract MmBaseScriptExecutor is ConditionsChecker, ConditionsCheckerForMoneyMarket {
     mapping(address => mapping(IERC20 => bool)) private allowances;
 
-    constructor() ConditionsChecker(350000) {}
+    constructor() ConditionsChecker(460000) {}
 
     /* ========== HASH FUNCTIONS ========== */
 

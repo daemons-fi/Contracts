@@ -11,7 +11,7 @@ contract MmAdvancedScriptExecutor is ConditionsChecker, ConditionsCheckerForMone
     mapping(address => mapping(IERC20 => bool)) private allowances;
     IPriceOracleGetter public priceOracle;
 
-    constructor() ConditionsChecker(350000) {}
+    constructor() ConditionsChecker(520000) {}
 
     /* ========== RESTRICTED FUNCTIONS ========== */
 
