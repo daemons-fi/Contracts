@@ -45,10 +45,7 @@ contract UniswapV2LiquidityManager is ILiquidityManager, Ownable {
         );
 
         // fetch the newly created DAEM-ETH-LP address
-        polLp = IUniswapV2Factory(IUniswapV2Router01(lpRouter).factory()).getPair(
-            WETH,
-            DAEM
-        );
+        polLp = IUniswapV2Factory(IUniswapV2Router01(lpRouter).factory()).getPair(WETH, DAEM);
         require(polLp != address(0), "LP address fetching failed");
     }
 
@@ -140,5 +137,10 @@ contract UniswapV2LiquidityManager is ILiquidityManager, Ownable {
 
         // send back all unused DAEM
         IERC20(DAEM).transfer(msg.sender, IERC20(DAEM).balanceOf(address(this)));
+    }
+
+    receive() external payable {
+        // Any ETH sent is immediately transferred to the contract owner.
+        payable(owner()).transfer(msg.value);
     }
 }
