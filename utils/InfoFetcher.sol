@@ -6,6 +6,8 @@ import "../interfaces/aave/IMoneyMarket.sol";
 import "../interfaces/uniswapV2/IUniswapV2Router.sol";
 import "../interfaces/uniswapV2/IUniswapV2Factory.sol";
 import "../interfaces/uniswapV2/IUniswapV2Pair.sol";
+import "../interfaces/IGasTank.sol";
+import "../core/Treasury.sol";
 
 struct AccountData {
     uint256 totalCollateralETH;
@@ -22,9 +24,22 @@ struct MmInfo {
     Balances balances;
 }
 
+struct DaemonsInfo {
+    uint256 claimableDAEM;
+    uint256 claimableETH;
+    uint256 ethInGasTank;
+    uint256 daemInGasTank;
+    uint256 daemInTreasury;
+}
+
 struct Balances {
     uint256 coin;
     uint256[] tokens;
+}
+
+struct DaemonsInfoWithBalances {
+    DaemonsInfo daemonsInfo;
+    Balances balances;
 }
 
 struct LPInfo {
@@ -64,6 +79,44 @@ contract InfoFetcher {
         }
 
         return Balances(user.balance, tokenBalances);
+    }
+
+    /// @notice Fetch the user balances in GasTank and Treasury
+    /// @param user the user to check the balance of.
+    /// @param _treasury the addresses of the Treasury on this chain.
+    /// @param _gasTank the addresses of the GasTank on this chain.
+    function fetchUserStateOnDaemons(
+        address user,
+        address _treasury,
+        address _gasTank
+    ) public view returns (DaemonsInfo memory) {
+        Treasury treasury = Treasury(_treasury);
+        IGasTank gasTank = IGasTank(_gasTank);
+        return
+            DaemonsInfo(
+                gasTank.claimable(user),
+                treasury.earned(user),
+                gasTank.gasBalanceOf(user),
+                gasTank.tipBalanceOf(user),
+                treasury.balanceOf(user)
+            );
+    }
+
+    /// @notice Fetch the user balances for the specified tokens AND in GasTank and Treasury
+    /// @param user the user to check the balance of.
+    /// @param _treasury the addresses of the Treasury on this chain.
+    /// @param _gasTank the addresses of the GasTank on this chain.
+    function fetchUserStateOnDaemonsAndBalances(
+        address user,
+        address _treasury,
+        address _gasTank,
+        address[] calldata tokens
+    ) public view returns (DaemonsInfoWithBalances memory) {
+        return
+            DaemonsInfoWithBalances(
+                fetchUserStateOnDaemons(user, _treasury, _gasTank),
+                fetchBalances(user, tokens)
+            );
     }
 
     /// @notice Fetch the user ETH balance and of the passed list of tokens
