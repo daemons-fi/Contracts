@@ -23,6 +23,7 @@ contract UniswapV2LiquidityManager is ILiquidityManager, Ownable {
         WETH = lpRouter.WETH();
         DAEM = _DAEM;
         IERC20(DAEM).approve(_lpRouter, type(uint256).max);
+        IERC20(WETH).approve(_lpRouter, type(uint256).max);
     }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
@@ -110,6 +111,35 @@ contract UniswapV2LiquidityManager is ILiquidityManager, Ownable {
                 to,
                 deadline
             )[1];
+    }
+
+    /// @inheritdoc ILiquidityManager
+    function swapTokenForToken(
+        uint256 amountIn,
+        uint256 swapType,
+        uint256 amountOutMin,
+        address to,
+        uint256 deadline
+    ) external returns (uint256 amount) {
+        require(polLp != address(0), "LP not initialized yet");
+        // swapType => 0: WETH-to-DAEM, 1:DAEM-to-WETH, 2: DAEM-to-ETH.
+
+        address[] memory path = new address[](2);
+        path[0] = swapType == 0 ? WETH : DAEM;
+        path[1] = swapType == 0 ? DAEM : WETH;
+
+        require(
+            IERC20(path[0]).allowance(msg.sender, address(this)) >= amountIn,
+            "[LIQ-MAN] Not enough allowance"
+        );
+        IERC20(path[0]).transferFrom(msg.sender, address(this), amountIn);
+
+        if (swapType == 2) // DAEM-to-ETH
+        {
+            return lpRouter.swapExactTokensForETH(amountIn, amountOutMin, path, to, deadline)[1];
+        } else {
+            return lpRouter.swapExactTokensForTokens(amountIn, amountOutMin, path, to, deadline)[1];
+        }
     }
 
     /* ========== LIQUIDITY FUNCTIONS ========== */

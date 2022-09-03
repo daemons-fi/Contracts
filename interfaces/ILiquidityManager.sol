@@ -56,6 +56,22 @@ interface ILiquidityManager {
         uint256 deadline
     ) external payable returns (uint256 amount);
 
+    /**
+     * @notice Swap either WETH for DAEM or DAEM for WETH/ETH.
+     * @param swapType swap type. 0: WETH-to-DAEM, 1:DAEM-to-WETH, 2: DAEM-to-ETH.
+     * @param amountIn the amount swapped of the input token.
+     * @param amountOutMin minimum amount to be sent, otherwise the tx will fail.
+     * @param to address that will receive the swap result.
+     * @param deadline block after which the transaction will fail.
+     */
+    function swapTokenForToken(
+        uint256 amountIn,
+        uint256 swapType,
+        uint256 amountOutMin,
+        address to,
+        uint256 deadline
+    ) external returns (uint256 amount);
+
     /* ========== LIQUIDITY FUNCTIONS ========== */
 
     /**
